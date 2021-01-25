@@ -54,9 +54,6 @@ def run_comparison(fileName1, fileName2, thresh, verbosity = 10):
             print('      Atom group',ag1[m].resname)
           as1 = ag1[m].atoms()
           as2 = ag2[m].atoms()
-          if len(as1) != len(as2):
-            print('Different number of atoms:',len(as1),'vs.',len(as2),
-              'in',ag1[m].resname+' '+chains1[j].id+r1[k].resseq)
 
           # Atom names are unique within residues, so we can use that to
           # match atoms in one file from those in the other and print out
@@ -66,15 +63,15 @@ def run_comparison(fileName1, fileName2, thresh, verbosity = 10):
           for a1 in as1:
             match = ag2[m].get_atom(a1.name.strip())
             if match is None:
-              print(' Only in first:',a1.name.strip())
+              print(ag1[m].resname+' '+chains1[j].id+r1[k].resseq,'Only in first:',a1.name.strip())
               continue
             dist = a1.distance(match)
             if dist > thresh:
-              print(' Distance between',a1.name.strip(),"{:.2f}".format(dist))
+              print(ag1[m].resname+' '+chains1[j].id+r1[k].resseq,'Distance between',a1.name.strip(),"{:.2f}".format(dist))
           for a2 in as2:
             match = ag1[m].get_atom(a2.name.strip())
             if match is None:
-              print(' Only in second:',a2.name.strip())
+              print(ag1[m].resname+' '+chains1[j].id+r1[k].resseq,'Only in second:',a2.name.strip())
 
 if __name__ == "__main__":
 
